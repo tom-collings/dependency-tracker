@@ -24,6 +24,7 @@ public class JavaCollector {
 
     private final static String MAVEN_FILE_PATTERN = "pom.xml";
     private final static String GRADLE_FILE_PATTERN = "build.gradle";
+    private final static String GRADLE_KOTLIN_FILE_PATTERN = "build.gradle.kts";
     private File rootDirectory;
 
     private static final String LIST_START_STRING = "The following files have been resolved";
@@ -52,7 +53,18 @@ public class JavaCollector {
         ).stream().toList();
 
         for (File f : files) {
-            System.out.println("found pom at " + f.getAbsolutePath());
+            System.out.println("found build.gradle at " + f.getAbsolutePath());
+            buildDependencyTreeGradle(f, dependencies);
+        }
+
+        files = FileUtils.listFiles(
+                dir,
+                new RegexFileFilter(GRADLE_KOTLIN_FILE_PATTERN),
+                DirectoryFileFilter.DIRECTORY
+        ).stream().toList();
+
+        for (File f : files) {
+            System.out.println("found build.gradle.kts at " + f.getAbsolutePath());
             buildDependencyTreeGradle(f, dependencies);
         }
 
