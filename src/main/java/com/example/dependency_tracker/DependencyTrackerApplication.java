@@ -36,7 +36,7 @@ public class DependencyTrackerApplication implements CommandLineRunner{
             javaHandler.fetchDependencies(dependencies);
 
             FileExplorer.createFile(new File(outputDir + "/" + "dependencies.json"), dependencies.toString());
-            FileExplorer.createFile(new File(outputDir + "/" + "dependencies.csv"), CsvWriter.generateDependencyReportFromJson(dependencies));
+            //FileExplorer.createFile(new File(outputDir + "/" + "dependencies.csv"), CsvWriter.generateDependencyReportFromJson(dependencies));
         }
         else {
             System.err.println("Provide input and output paths!");
