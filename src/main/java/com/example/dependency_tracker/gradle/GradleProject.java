@@ -333,6 +333,7 @@ public class GradleProject {
         String jdkSource = null;
         String jdkTarget = null;
         String jdkRelease = null;
+        String jdkChainVersion = null;
 
         String regexJdkSource = "sourceCompatibility(.*)";
         Pattern patternJdkSource = Pattern.compile(regexJdkSource);
@@ -366,6 +367,17 @@ public class GradleProject {
             }
         }
         project.setJavaRelease(jdkRelease);
+
+        String regexJavaVersion = "JavaLanguageVersion(.*)";
+        Pattern versionJDK = Pattern.compile(regexJavaVersion);
+        Matcher matcherJDK = versionJDK.matcher(project.getFileContent());
+        if (matcherJDK.find()) {
+            jdkChainVersion = matcherJDK.group(1);
+            if (jdkChainVersion != null) {   
+                jdkChainVersion = jdkChainVersion.replace(".of(","").replace(")", "");          
+            }
+        }
+        project.setJavaVersion(jdkChainVersion);
 
     }
 
